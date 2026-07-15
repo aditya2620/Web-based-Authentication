@@ -1,0 +1,19 @@
+{
+  "name": "auths-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Web Authentication Explorer",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "@simplewebauthn/server": "^10.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
