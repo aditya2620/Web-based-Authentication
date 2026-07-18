@@ -13,7 +13,7 @@ export const webauthnRouter = Router();
 // Relying Party (RP) Configuration
 const RP_NAME = 'Web Auth Explorer';
 const RP_ID = 'localhost';
-const EXPECTED_ORIGIN = 'http://localhost:5173';
+const EXPECTED_ORIGIN = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // Helper to convert Uint8Array/Buffer to Base64URL
 function bufferToBase64URL(buffer) {

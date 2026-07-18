@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE } from '../config';
 
 export default function OAuthView({ apiCall, addLog }) {
   const [oauthToken, setOauthToken] = useState(localStorage.getItem('oauth_access_token') || '');
@@ -8,7 +9,7 @@ export default function OAuthView({ apiCall, addLog }) {
   
   const CLIENT_ID = 'client-explorer-id';
   const CLIENT_SECRET = 'client-explorer-secret';
-  const REDIRECT_URI = 'http://localhost:5173/auth/oauth/callback';
+  const REDIRECT_URI = window.location.origin + '/auth/oauth/callback';
 
   // Check URL parameters for Authorization Code (OAuth callback)
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function OAuthView({ apiCall, addLog }) {
 
   const initiateOAuthRedirect = () => {
     const state = Math.random().toString(36).substring(7);
-    const authUrl = `http://localhost:5000/api/auth/oauth/authorize?` +
+    const authUrl = `${API_BASE}/api/auth/oauth/authorize?` +
       `response_type=code&` +
       `client_id=${CLIENT_ID}&` +
       `redirect_uri=${encodeURIComponent(REDIRECT_URI)}&` +
@@ -51,7 +52,7 @@ export default function OAuthView({ apiCall, addLog }) {
 
     try {
       // Exchanging authorization code for access token (This is typically done backend-to-backend for security)
-      const response = await fetch('http://localhost:5000/api/auth/oauth/token', {
+      const response = await fetch(`${API_BASE}/api/auth/oauth/token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -105,7 +106,7 @@ export default function OAuthView({ apiCall, addLog }) {
     setAnimState('req');
 
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/oauth/userinfo', {
+      const data = await apiCall(`${API_BASE}/api/auth/oauth/userinfo`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`

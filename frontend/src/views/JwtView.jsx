@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE } from '../config';
 
 export default function JwtView({ apiCall }) {
   const [regUsername, setRegUsername] = useState('');
@@ -43,7 +44,7 @@ export default function JwtView({ apiCall }) {
     e.preventDefault();
     setConsoleMsg({ text: 'Registering...', type: '' });
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/jwt/register', {
+      const data = await apiCall(`${API_BASE}/api/auth/jwt/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: regUsername, password: regPassword })
@@ -65,7 +66,7 @@ export default function JwtView({ apiCall }) {
     setAnimState('req');
     
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/jwt/login', {
+      const data = await apiCall(`${API_BASE}/api/auth/jwt/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: loginUsername, password: loginPassword })
@@ -115,7 +116,7 @@ export default function JwtView({ apiCall }) {
     setAnimState('req');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/jwt/profile', {
+      const response = await fetch(`${API_BASE}/api/auth/jwt/profile`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${tokenToUse}`
@@ -161,7 +162,7 @@ export default function JwtView({ apiCall }) {
     setAnimState('req');
 
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/jwt/refresh', {
+      const data = await apiCall(`${API_BASE}/api/auth/jwt/refresh`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken })
@@ -194,7 +195,7 @@ export default function JwtView({ apiCall }) {
     setAnimState('req');
 
     try {
-      await apiCall('http://localhost:5000/api/auth/jwt/logout', {
+      await apiCall(`${API_BASE}/api/auth/jwt/logout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refreshToken })

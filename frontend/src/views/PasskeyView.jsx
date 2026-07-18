@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { startRegistration, startAuthentication } from '@simplewebauthn/browser';
+import { API_BASE } from '../config';
 
 export default function PasskeyView({ apiCall, addLog }) {
   const [username, setUsername] = useState('');
@@ -26,7 +27,7 @@ export default function PasskeyView({ apiCall, addLog }) {
 
     try {
       // 1. Fetch options from server
-      const options = await apiCall(`http://localhost:5000/api/auth/webauthn/register-options?username=${encodeURIComponent(username)}`, {
+      const options = await apiCall(`${API_BASE}/api/auth/webauthn/register-options?username=${encodeURIComponent(username)}`, {
         method: 'GET'
       });
 
@@ -54,7 +55,7 @@ export default function PasskeyView({ apiCall, addLog }) {
       setAnimState('req');
 
       // 3. Send response back to server for verification
-      const verifyResult = await apiCall('http://localhost:5000/api/auth/webauthn/register-verification', {
+      const verifyResult = await apiCall(`${API_BASE}/api/auth/webauthn/register-verification`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, credential: attestationResponse })
@@ -90,7 +91,7 @@ export default function PasskeyView({ apiCall, addLog }) {
 
     try {
       // 1. Fetch options from server
-      const options = await apiCall(`http://localhost:5000/api/auth/webauthn/login-options?username=${encodeURIComponent(username)}`, {
+      const options = await apiCall(`${API_BASE}/api/auth/webauthn/login-options?username=${encodeURIComponent(username)}`, {
         method: 'GET'
       });
 
@@ -118,7 +119,7 @@ export default function PasskeyView({ apiCall, addLog }) {
       setAnimState('req');
 
       // 3. Send response back to server for verification
-      const verifyResult = await apiCall('http://localhost:5000/api/auth/webauthn/login-verification', {
+      const verifyResult = await apiCall(`${API_BASE}/api/auth/webauthn/login-verification`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, credential: assertionResponse })
@@ -151,7 +152,7 @@ export default function PasskeyView({ apiCall, addLog }) {
     setAnimState('req');
 
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/session/profile', {
+      const data = await apiCall(`${API_BASE}/api/auth/session/profile`, {
         method: 'GET'
       });
 
@@ -178,7 +179,7 @@ export default function PasskeyView({ apiCall, addLog }) {
     setAnimState('req');
 
     try {
-      await apiCall('http://localhost:5000/api/auth/session/logout', {
+      await apiCall(`${API_BASE}/api/auth/session/logout`, {
         method: 'POST'
       });
 

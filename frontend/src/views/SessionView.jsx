@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE } from '../config';
 
 export default function SessionView({ apiCall }) {
   const [regUsername, setRegUsername] = useState('');
@@ -21,7 +22,7 @@ export default function SessionView({ apiCall }) {
     e.preventDefault();
     setConsoleMsg({ text: 'Registering...', type: '' });
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/session/register', {
+      const data = await apiCall(`${API_BASE}/api/auth/session/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: regUsername, password: regPassword })
@@ -44,7 +45,7 @@ export default function SessionView({ apiCall }) {
     
     try {
       // NOTE: We must pass credentials: 'include' to allow cookies to be saved in a cross-origin setting
-      const data = await apiCall('http://localhost:5000/api/auth/session/login', {
+      const data = await apiCall(`${API_BASE}/api/auth/session/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: loginUsername, password: loginPassword })
@@ -78,7 +79,7 @@ export default function SessionView({ apiCall }) {
     setAnimState('req');
 
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/session/profile', {
+      const data = await apiCall(`${API_BASE}/api/auth/session/profile`, {
         method: 'GET'
       });
 
@@ -105,7 +106,7 @@ export default function SessionView({ apiCall }) {
     setAnimState('req');
 
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/session/logout', {
+      const data = await apiCall(`${API_BASE}/api/auth/session/logout`, {
         method: 'POST'
       });
 

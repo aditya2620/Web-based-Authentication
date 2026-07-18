@@ -24,7 +24,10 @@ export const db = {
     accessTokens: new Map(),
     // Clients
     clients: new Map([
-      ['client-explorer-id', { clientSecret: 'client-explorer-secret', redirectUri: 'http://localhost:5173/auth/oauth/callback' }]
+      ['client-explorer-id', {
+        clientSecret: 'client-explorer-secret',
+        redirectUri: process.env.OAUTH_REDIRECT_URI || 'http://localhost:5173/auth/oauth/callback'
+      }]
     ])
   }
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE } from '../config';
 
 export default function BasicView({ apiCall, addLog }) {
   const [regUsername, setRegUsername] = useState('');
@@ -20,7 +21,7 @@ export default function BasicView({ apiCall, addLog }) {
     e.preventDefault();
     setConsoleMsg({ text: 'Registering...', type: '' });
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/basic/register', {
+      const data = await apiCall(`${API_BASE}/api/auth/basic/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: regUsername, password: regPassword })
@@ -68,7 +69,7 @@ export default function BasicView({ apiCall, addLog }) {
 
     setAnimState('req');
     try {
-      const data = await apiCall('http://localhost:5000/api/auth/basic/profile', {
+      const data = await apiCall(`${API_BASE}/api/auth/basic/profile`, {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${creds}`
